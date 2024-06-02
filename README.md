@@ -1,4 +1,4 @@
-# foodology
+# Foodology
 
 A new Flutter project.
 

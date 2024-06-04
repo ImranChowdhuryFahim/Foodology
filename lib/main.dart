@@ -8,9 +8,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load();
   await Supabase.initialize(
-    url: AppSecrets.supabaseUrl,
-    anonKey: AppSecrets.supabaseAnonKey
-  );
+      url: AppSecrets.supabaseUrl, anonKey: AppSecrets.supabaseAnonKey);
   runApp(const MyApp());
 }
 
@@ -31,4 +29,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-

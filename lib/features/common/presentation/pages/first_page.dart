@@ -3,6 +3,7 @@ import 'package:foodology/features/authentication/admin/presentation/pages/admin
 import 'package:foodology/features/authentication/customer/presentation/pages/customer_login_page.dart';
 import 'package:foodology/features/authentication/restaurant/presentation/pages/restaurant_login_page.dart';
 import 'package:foodology/features/authentication/rider/presentation/pages/rider_login_page.dart';
+import 'package:foodology/features/common/presentation/widgets/image_button.dart';
 
 class FirstPage extends StatelessWidget{
 
@@ -19,50 +20,20 @@ class FirstPage extends StatelessWidget{
             children: [
               Image.asset('assets/images/foodoloy.png',height: 280),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  GestureDetector(
-                    onTap:() => Navigator.push(context,AdminLoginPage.route()),
-                    child: Column(
-                      children: [
-                        Image.asset('assets/images/admin.png',height: 80,),
-                        const Text('Admin')
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.push(context,CustomerLoginPage.route()),
-                    child: Column(
-                      children: [
-                        Image.asset('assets/images/customer.png',height: 80),
-                        const Text('Customer')
-                      ],
-                    ),
-                  )
+                  ImageButton(route: AdminLoginPage.route(), imageName: 'admin', buttonText: 'Admin'),
+                  ImageButton(route: CustomerLoginPage.route(), imageName: 'customer', buttonText: 'Customer'),
                 ],
               ),
               const SizedBox(height: 50),
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  GestureDetector(
-                    onTap: () => Navigator.push(context,RestaurantLoginPage.route()),
-                    child: Column(
-                      children: [
-                        Image.asset('assets/images/restaurant.png',height: 80),
-                        const Text('Restaurant')
-                      ],
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: () => Navigator.push(context,RiderLoginPage.route()),
-                    child: Column(
-                      children: [
-                        Image.asset('assets/images/rider.png',height: 80),
-                        const Text('Rider')
-                      ],
-                    ),
-                  ),
+                  ImageButton(route: RestaurantLoginPage.route(), imageName: 'restaurant', buttonText: 'Restaurant'),
+                  ImageButton(route: RiderLoginPage.route(), imageName: 'rider', buttonText: 'Rider'),
                 ],
               ),
               // const SizedBox(height: 50,),

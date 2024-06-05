@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foodology/features/common/presentation/widgets/custom_input.dart';
+import 'package:foodology/features/dashboard/admin/presentation/pages/admin_dashboard.dart';
 
 class AdminLoginPage extends StatelessWidget {
   static route() => MaterialPageRoute(builder: (context) => AdminLoginPage());
@@ -36,11 +37,8 @@ class AdminLoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {
-                    String username = _usernameController.text;
-                    String password = _passwordController.text;
-                    print('Username: $username, Password: $password');
-                  },
+                  onPressed: () =>
+                      Navigator.push(context, AdminDashboard.route()),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0F961D),
                     foregroundColor: Colors.white,

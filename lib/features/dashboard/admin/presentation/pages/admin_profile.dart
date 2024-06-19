@@ -30,7 +30,7 @@ class AdminProfile extends StatelessWidget {
               children: [
                 const SizedBox(height: 50),
                 Image.asset(
-                  'assets/images/admin-rider.png',
+                  'assets/images/profile_picture.png',
                   height: 150,
                 ),
                 const SizedBox(height: 50),

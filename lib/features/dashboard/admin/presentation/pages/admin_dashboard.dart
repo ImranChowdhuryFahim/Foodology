@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foodology/features/dashboard/admin/presentation/pages/admin_account.dart';
 
 class AdminDashboard extends StatelessWidget {
   static route() =>
@@ -25,7 +26,8 @@ class AdminDashboard extends StatelessWidget {
                     style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                   ),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () =>
+                          Navigator.push(context, AdminAccount.route()),
                       icon: const Icon(
                         Icons.person,
                         size: 24,

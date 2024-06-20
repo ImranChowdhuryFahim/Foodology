@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:foodology/features/dashboard/customer/presentation/pages/cart_details.dart';
+import 'package:foodology/features/dashboard/customer/presentation/pages/food_item_details.dart';
+import 'package:foodology/features/dashboard/customer/presentation/pages/restaurant_details.dart';
 import 'package:foodology/features/dashboard/customer/presentation/widgets/catagory_list.dart';
 import 'package:foodology/features/dashboard/customer/presentation/widgets/horizontal_list.dart';
 import 'package:foodology/features/dashboard/customer/presentation/widgets/section_title.dart';
@@ -38,9 +41,9 @@ class CustomerHomepage extends StatelessWidget {
     {'image': 'assets/images/popular_restaurant.png', 'name': 'Burger'},
   ];
   final List<Map<String, String>> restaurants = [
-    {'image': 'assets/images/takeout.png', 'name': 'Burger'},
-    {'image': 'assets/images/takeout.png', 'name': 'Burger'},
-    {'image': 'assets/images/takeout.png', 'name': 'Burger'},
+    {'image': 'takeout', 'name': 'Burger'},
+    {'image': 'takeout', 'name': 'Burger'},
+    {'image': 'takeout', 'name': 'Burger'},
   ];
 
   @override
@@ -71,7 +74,7 @@ class CustomerHomepage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.shopping_cart),
             color: Colors.black,
-            onPressed: () => {},
+            onPressed: () => Navigator.push(context, CartDetails.route()),
           ),
           const SizedBox(width: 16),
           IconButton(
@@ -110,7 +113,10 @@ class CustomerHomepage extends StatelessWidget {
                   const SectionTitle(title: "Categories"),
                   CatagoryList(catagories: catagories),
                   const SectionTitle(title: "Today's pick"),
-                  TodaysPicksList(todaysPicks: todayspicks),
+                  TodaysPicksList(
+                    todaysPicks: todayspicks,
+                    routeGenerator: (item) => FoodItemDetails.route(),
+                  ),
                   const SectionTitle(title: "Recommended"),
                   HorizontalList(items: recommended),
                   const SectionTitle(title: "Popular Restaurants"),
@@ -118,7 +124,10 @@ class CustomerHomepage extends StatelessWidget {
                   const SectionTitle(title: "Popular Cuisines"),
                   HorizontalList(items: catagories),
                   const SectionTitle(title: "Restaurants Near You"),
-                  HorizontalList(items: restaurants),
+                  TodaysPicksList(
+                    todaysPicks: restaurants,
+                    routeGenerator: (item) => RestaurantDetails.route(),
+                  ),
                 ],
               ),
             ),

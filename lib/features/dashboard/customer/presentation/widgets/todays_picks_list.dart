@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:foodology/features/common/presentation/widgets/image_button.dart';
-import 'package:foodology/features/dashboard/customer/presentation/pages/food_item_details.dart';
+
+typedef RouteGenerator = Route<dynamic> Function(Map<String, String> item);
 
 class TodaysPicksList extends StatelessWidget {
   final List<Map<String, String>> todaysPicks;
+  final RouteGenerator routeGenerator;
 
   const TodaysPicksList({
     super.key,
     required this.todaysPicks,
+    required this.routeGenerator,
   });
 
   @override
@@ -21,7 +24,7 @@ class TodaysPicksList extends StatelessWidget {
               child: ImageButton(
                 buttonText: item['name']!,
                 imageName: item['image']!,
-                route: FoodItemDetails.route(),
+                route: routeGenerator(item),
                 imageHeight: 120,
                 imageWidth: 200,
               ));

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:foodology/features/dashboard/admin/presentation/pages/admin_profile.dart';
+import 'package:foodology/features/authentication/customer/presentation/pages/customer_login_page.dart';
 import 'package:foodology/features/dashboard/admin/presentation/widgets/account_option.dart';
+import 'package:foodology/features/dashboard/customer/presentation/pages/customer_homepage.dart';
+import 'package:foodology/features/dashboard/customer/presentation/pages/customer_profile.dart';
 
-class AdminAccount extends StatelessWidget {
+class CustomerAccount extends StatelessWidget {
   static route() =>
-      MaterialPageRoute(builder: (context) => const AdminAccount());
-  const AdminAccount({super.key});
+      MaterialPageRoute(builder: (context) => const CustomerAccount());
+  const CustomerAccount({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,9 +19,7 @@ class AdminAccount extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.close, color: Colors.red),
-            onPressed: () {
-              // Add your onPressed code here!
-            },
+            onPressed: () => Navigator.push(context, CustomerHomepage.route()),
           ),
         ],
       ),
@@ -27,7 +27,7 @@ class AdminAccount extends StatelessWidget {
         child: Column(
           children: [
             GestureDetector(
-              onTap: () => Navigator.push(context, AdminProfile.route()),
+              onTap: () => Navigator.push(context, CustomerProfile.route()),
               child: Container(
                 padding: const EdgeInsets.all(16.0),
                 child: Row(
@@ -40,7 +40,7 @@ class AdminAccount extends StatelessWidget {
                     const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('Admin',
+                        Text('User',
                             style: TextStyle(
                                 fontSize: 18, fontWeight: FontWeight.bold)),
                       ],
@@ -73,9 +73,25 @@ class AdminAccount extends StatelessWidget {
             const AccountOption(title: 'Help', icon: Icons.help),
             const AccountOption(title: 'Policies', icon: Icons.policy),
             ListTile(
+              title: const Text('More'),
+              tileColor: Colors.orange.shade100,
+            ),
+            ListTile(
+              leading: const Icon(Icons.dark_mode, color: Colors.black),
+              title: const Text('Dark Mode'),
+              trailing: Switch(
+                value: false,
+                onChanged: (bool value) {},
+              ),
+              onTap: () {},
+            ),
+            const AccountOption(
+                title: 'Terms & Conditions', icon: Icons.edit_document),
+            const AccountOption(title: 'Privacy', icon: Icons.privacy_tip),
+            ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),
               title: const Text('Log Out'),
-              onTap: () {},
+              onTap: () => Navigator.push(context, CustomerLoginPage.route()),
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),

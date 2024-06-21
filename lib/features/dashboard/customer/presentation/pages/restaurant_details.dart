@@ -103,6 +103,8 @@ class RestaurantDetails extends StatelessWidget {
               ),
               TodaysPicksList(
                 todaysPicks: deals,
+                imageHeight: 100,
+                imageWidth: 120,
                 routeGenerator: (item) => FoodItemDetails.route(),
               ),
               CategoryTabBar(

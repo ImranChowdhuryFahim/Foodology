@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foodology/features/dashboard/customer/presentation/pages/cart_details.dart';
+import 'package:foodology/features/dashboard/customer/presentation/pages/chat_screen.dart';
+import 'package:foodology/features/dashboard/customer/presentation/pages/customer_account.dart';
 import 'package:foodology/features/dashboard/customer/presentation/pages/food_item_details.dart';
 import 'package:foodology/features/dashboard/customer/presentation/pages/restaurant_details.dart';
-import 'package:foodology/features/dashboard/customer/presentation/widgets/catagory_list.dart';
-import 'package:foodology/features/dashboard/customer/presentation/widgets/horizontal_list.dart';
 import 'package:foodology/features/dashboard/customer/presentation/widgets/section_title.dart';
 import 'package:foodology/features/dashboard/customer/presentation/widgets/todays_picks_list.dart';
 
@@ -12,12 +12,11 @@ class CustomerHomepage extends StatelessWidget {
   CustomerHomepage({super.key});
 
   final List<Map<String, String>> catagories = [
-    {'image': 'assets/images/catagory.png', 'name': 'Lunch'},
-    {'image': 'assets/images/catagory.png', 'name': 'Lunch'},
-    {'image': 'assets/images/catagory.png', 'name': 'Lunch'},
-    {'image': 'assets/images/catagory.png', 'name': 'Lunch'},
-    {'image': 'assets/images/catagory.png', 'name': 'Lunch'},
-    {'image': 'assets/images/catagory.png', 'name': 'Lunch'},
+    {'image': 'catagory', 'name': 'Traditional'},
+    {'image': 'catagory', 'name': 'Traditional'},
+    {'image': 'catagory', 'name': 'Traditional'},
+    {'image': 'catagory', 'name': 'Traditional'},
+    {'image': 'catagory', 'name': 'Traditional'},
   ];
 
   final List<Map<String, String>> todayspicks = [
@@ -28,22 +27,23 @@ class CustomerHomepage extends StatelessWidget {
     {'image': 'todays_pick', 'name': 'Burger'},
   ];
   final List<Map<String, String>> recommended = [
-    {'image': 'assets/images/recommended.png', 'name': 'Burger'},
-    {'image': 'assets/images/recommended.png', 'name': 'Burger'},
-    {'image': 'assets/images/recommended.png', 'name': 'Burger'},
-    {'image': 'assets/images/recommended.png', 'name': 'Burger'},
-    {'image': 'assets/images/recommended.png', 'name': 'Burger'},
-    {'image': 'assets/images/recommended.png', 'name': 'Burger'},
+    {'image': 'recommended', 'name': 'Pasta'},
+    {'image': 'recommended', 'name': 'Pasta'},
+    {'image': 'recommended', 'name': 'Pasta'},
+    {'image': 'recommended', 'name': 'Pasta'},
+    {'image': 'recommended', 'name': 'Pasta'},
   ];
   final List<Map<String, String>> popularRestaurants = [
-    {'image': 'assets/images/popular_restaurant.png', 'name': 'Burger'},
-    {'image': 'assets/images/popular_restaurant.png', 'name': 'Burger'},
-    {'image': 'assets/images/popular_restaurant.png', 'name': 'Burger'},
+    {'image': 'popular_restaurant', 'name': 'Pallabi Kitchen'},
+    {'image': 'popular_restaurant', 'name': 'Pallabi Kitchen'},
+    {'image': 'popular_restaurant', 'name': 'Pallabi Kitchen'},
+    {'image': 'popular_restaurant', 'name': 'Pallabi Kitchen'},
+    {'image': 'popular_restaurant', 'name': 'Pallabi Kitchen'},
   ];
   final List<Map<String, String>> restaurants = [
-    {'image': 'takeout', 'name': 'Burger'},
-    {'image': 'takeout', 'name': 'Burger'},
-    {'image': 'takeout', 'name': 'Burger'},
+    {'image': 'takeout', 'name': 'Takeout'},
+    {'image': 'takeout', 'name': 'Takeout'},
+    {'image': 'takeout', 'name': 'Takeout'},
   ];
 
   @override
@@ -80,7 +80,7 @@ class CustomerHomepage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.account_circle),
             color: Colors.black,
-            onPressed: () => {},
+            onPressed: () => Navigator.push(context, CustomerAccount.route()),
           ),
           const SizedBox(width: 16),
         ],
@@ -92,17 +92,23 @@ class CustomerHomepage extends StatelessWidget {
               color: Colors.red.shade600,
               padding:
                   const EdgeInsets.symmetric(horizontal: 8.0, vertical: 8.0),
-              child: const Row(
-                children: [
-                  Icon(Icons.pets, color: Colors.yellow, size: 24),
-                  SizedBox(width: 8),
-                  Expanded(
-                    child: Text(
-                      'Chat with Pikachu, your personal AI food delivery assistant',
-                      style: TextStyle(color: Colors.white),
+              child: GestureDetector(
+                onTap: () => Navigator.push(context, ChatScreen.route()),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      'assets/images/pikachu.png',
+                      height: 24,
                     ),
-                  ),
-                ],
+                    const SizedBox(width: 8),
+                    const Expanded(
+                      child: Text(
+                        'Chat with Pikachu, your personal AI food delivery assistant',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             Padding(
@@ -111,21 +117,45 @@ class CustomerHomepage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SectionTitle(title: "Categories"),
-                  CatagoryList(catagories: catagories),
+                  TodaysPicksList(
+                    todaysPicks: catagories,
+                    imageHeight: 120,
+                    imageWidth: 120,
+                    routeGenerator: (item) => FoodItemDetails.route(),
+                  ),
                   const SectionTitle(title: "Today's pick"),
                   TodaysPicksList(
                     todaysPicks: todayspicks,
+                    imageHeight: 150,
+                    imageWidth: 200,
                     routeGenerator: (item) => FoodItemDetails.route(),
                   ),
                   const SectionTitle(title: "Recommended"),
-                  HorizontalList(items: recommended),
+                  TodaysPicksList(
+                    todaysPicks: recommended,
+                    imageHeight: 120,
+                    imageWidth: 120,
+                    routeGenerator: (item) => FoodItemDetails.route(),
+                  ),
                   const SectionTitle(title: "Popular Restaurants"),
-                  HorizontalList(items: popularRestaurants),
+                  TodaysPicksList(
+                    todaysPicks: popularRestaurants,
+                    imageHeight: 120,
+                    imageWidth: 120,
+                    routeGenerator: (item) => RestaurantDetails.route(),
+                  ),
                   const SectionTitle(title: "Popular Cuisines"),
-                  HorizontalList(items: catagories),
+                  TodaysPicksList(
+                    todaysPicks: catagories,
+                    imageHeight: 120,
+                    imageWidth: 120,
+                    routeGenerator: (item) => FoodItemDetails.route(),
+                  ),
                   const SectionTitle(title: "Restaurants Near You"),
                   TodaysPicksList(
                     todaysPicks: restaurants,
+                    imageHeight: 120,
+                    imageWidth: 120,
                     routeGenerator: (item) => RestaurantDetails.route(),
                   ),
                 ],

@@ -11,7 +11,7 @@ class DeliveryAddress extends StatelessWidget {
         const Text('Delivery Address',
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
         const SizedBox(height: 10),
-        Image.network('https://via.placeholder.com/400x200', fit: BoxFit.cover),
+        Image.asset('assets/images/map.png', fit: BoxFit.cover),
         TextButton(onPressed: () {}, child: const Text('Change address')),
       ],
     );

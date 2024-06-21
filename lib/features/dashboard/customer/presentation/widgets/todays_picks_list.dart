@@ -6,11 +6,15 @@ typedef RouteGenerator = Route<dynamic> Function(Map<String, String> item);
 class TodaysPicksList extends StatelessWidget {
   final List<Map<String, String>> todaysPicks;
   final RouteGenerator routeGenerator;
+  final double imageHeight;
+  final double imageWidth;
 
   const TodaysPicksList({
     super.key,
     required this.todaysPicks,
     required this.routeGenerator,
+    required this.imageHeight,
+    required this.imageWidth,
   });
 
   @override
@@ -25,8 +29,8 @@ class TodaysPicksList extends StatelessWidget {
                 buttonText: item['name']!,
                 imageName: item['image']!,
                 route: routeGenerator(item),
-                imageHeight: 120,
-                imageWidth: 200,
+                imageHeight: imageHeight,
+                imageWidth: imageWidth,
               ));
         }).toList(),
       ),

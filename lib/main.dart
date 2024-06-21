@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:foodology/core/common/widgets/gradient_background.dart';
 import 'package:foodology/core/secrets/app_secrets.dart';
+import 'package:foodology/core/theme/theme.dart';
 import 'package:foodology/features/common/presentation/pages/first_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -19,10 +21,12 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Foodology',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.dark,
+       builder: (context, child) {
+              return GradientBackground(child: child!);
+            },
       home: const FirstPage(),
     );
   }

@@ -16,7 +16,6 @@ class FirstPage extends StatelessWidget{
         appBar: AppBar(),
         body: Center(
           child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Image.asset('assets/images/foodoloy.png',height: 280),
               Row(
@@ -36,8 +35,6 @@ class FirstPage extends StatelessWidget{
                   ImageButton(route: RiderLoginPage.route(), imageName: 'rider', buttonText: 'Rider'),
                 ],
               ),
-              // const SizedBox(height: 50,),
-              // RichText(text: const TextSpan(text: 'Not a member? ', style: TextStyle(color: Colors.black), children: [TextSpan(text: 'Register Yourself', style: TextStyle(color: Colors.blue))]))
             ],
            )),
       );

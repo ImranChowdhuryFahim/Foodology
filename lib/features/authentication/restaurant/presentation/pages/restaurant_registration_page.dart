@@ -99,13 +99,13 @@ class RestaurantRegistrationPage extends StatelessWidget {
                     onTap: () =>
                         Navigator.push(context, RestaurantLoginPage.route()),
                     child: RichText(
-                        text: const TextSpan(
+                        text: TextSpan(
                             text: 'Already a member? ',
-                            style: TextStyle(color: Colors.black),
-                            children: [
+                            style: TextStyle(color: Theme.of(context).textTheme.headlineMedium?.color),
+                            children: const [
                           TextSpan(
                               text: 'Login',
-                              style: TextStyle(color: Colors.blue))
+                              style: TextStyle(color:Color.fromARGB(255, 20, 97, 160)))
                         ])),
                   )
                 ],

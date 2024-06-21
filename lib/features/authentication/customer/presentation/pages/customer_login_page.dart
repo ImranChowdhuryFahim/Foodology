@@ -56,13 +56,13 @@ class CustomerLoginPage extends StatelessWidget {
                   onTap: () =>
                       Navigator.push(context, CustomerRegistrationPage.route()),
                   child: RichText(
-                      text: const TextSpan(
+                      text:  TextSpan(
                           text: 'Not a member? ',
-                          style: TextStyle(color: Colors.black),
-                          children: [
+                          style: TextStyle(color: Theme.of(context).textTheme.headlineMedium?.color),
+                          children: const [
                         TextSpan(
                             text: 'Register Yourself',
-                            style: TextStyle(color: Colors.blue))
+                            style: TextStyle(color: Color.fromARGB(255, 20, 97, 160)))
                       ])),
                 )
               ],

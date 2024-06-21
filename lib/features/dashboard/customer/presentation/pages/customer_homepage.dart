@@ -50,9 +50,8 @@ class CustomerHomepage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.yellow.shade700,
         elevation: 0,
-        leading: const Icon(Icons.menu, color: Colors.black),
+        leading: const Icon(Icons.menu),
         title: SizedBox(
           height: 40,
           child: TextField(
@@ -72,14 +71,16 @@ class CustomerHomepage extends StatelessWidget {
         ),
         actions: [
           IconButton(
+           onPressed: (){},
+           icon: const Icon(Icons.filter_alt_outlined)
+           ),
+          IconButton(
             icon: const Icon(Icons.shopping_cart),
-            color: Colors.black,
             onPressed: () => Navigator.push(context, CartDetails.route()),
           ),
           const SizedBox(width: 16),
           IconButton(
             icon: const Icon(Icons.account_circle),
-            color: Colors.black,
             onPressed: () => Navigator.push(context, CustomerAccount.route()),
           ),
           const SizedBox(width: 16),
@@ -165,7 +166,6 @@ class CustomerHomepage extends StatelessWidget {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Colors.yellow.shade700,
         selectedItemColor: Colors.black,
         unselectedItemColor: Colors.black,
         showSelectedLabels: false,

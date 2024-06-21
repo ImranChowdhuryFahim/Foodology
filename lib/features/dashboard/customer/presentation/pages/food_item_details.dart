@@ -43,7 +43,6 @@ class FoodItemDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.yellow.shade700,
         elevation: 0,
         actions: [
           IconButton(

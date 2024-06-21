@@ -14,8 +14,7 @@ class CustomerAccount extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: const Text('Account & Setting',
-            style: TextStyle(color: Colors.black)),
+        title: const Text('Account & Setting'),
         actions: [
           IconButton(
             icon: const Icon(Icons.close, color: Colors.red),
@@ -49,32 +48,32 @@ class CustomerAccount extends StatelessWidget {
                 ),
               ),
             ),
-            ListTile(
-              title: const Text('Account'),
-              tileColor: Colors.orange.shade100,
+            const ListTile(
+              title: Text('Account'),
+              // tileColor: Colors.orange.shade100,
             ),
             const AccountOption(title: 'Profile', icon: Icons.person),
             const AccountOption(title: 'Payment Details', icon: Icons.payment),
             const AccountOption(title: 'Order History', icon: Icons.history),
             const AccountOption(
                 title: 'Saved Addresses', icon: Icons.location_on),
-            ListTile(
-              title: const Text('Settings'),
-              tileColor: Colors.orange.shade100,
+            const ListTile(
+              title: Text('Settings'),
+              // tileColor: Colors.orange.shade100,
             ),
             const AccountOption(title: 'Languages', icon: Icons.language),
             const AccountOption(title: 'Permissions', icon: Icons.lock),
-            ListTile(
-              title: const Text('Legal & Help'),
-              tileColor: Colors.orange.shade100,
+            const ListTile(
+              title: Text('Legal & Help'),
+              // tileColor: Colors.orange.shade100,
             ),
             const AccountOption(
                 title: 'Emergency Support', icon: Icons.support),
             const AccountOption(title: 'Help', icon: Icons.help),
             const AccountOption(title: 'Policies', icon: Icons.policy),
-            ListTile(
-              title: const Text('More'),
-              tileColor: Colors.orange.shade100,
+            const ListTile(
+              title: Text('More'),
+              // tileColor: Colors.orange.shade100,
             ),
             ListTile(
               leading: const Icon(Icons.dark_mode, color: Colors.black),

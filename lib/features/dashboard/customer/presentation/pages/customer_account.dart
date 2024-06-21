@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodology/core/common/cubits/dark_mode/dark_mode_cubit.dart';
 import 'package:foodology/features/authentication/customer/presentation/pages/customer_login_page.dart';
 import 'package:foodology/features/dashboard/admin/presentation/widgets/account_option.dart';
 import 'package:foodology/features/dashboard/customer/presentation/pages/customer_homepage.dart';
@@ -78,9 +80,15 @@ class CustomerAccount extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.dark_mode, color: Colors.black),
               title: const Text('Dark Mode'),
-              trailing: Switch(
-                value: false,
-                onChanged: (bool value) {},
+              trailing: BlocBuilder<DarkModeCubit,bool>(
+                builder: (context,isDarkMode) {
+                  return Switch(
+                    value: isDarkMode,
+                    onChanged: (bool value) {
+                       context.read<DarkModeCubit>().toggleDarkMode();
+                    },
+                  );
+                }
               ),
               onTap: () {},
             ),

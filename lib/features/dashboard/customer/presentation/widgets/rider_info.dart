@@ -2,7 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:foodology/features/dashboard/customer/presentation/pages/food_delivered_screen.dart';
 
 class RiderInfo extends StatelessWidget {
-  const RiderInfo({super.key});
+  const RiderInfo(
+      {super.key,
+      required String name,
+      required String id,
+      required int points,
+      required String imageUrl});
 
   @override
   Widget build(BuildContext context) {

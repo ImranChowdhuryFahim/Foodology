@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodology/features/authentication/rider/presentation/pages/rider_registration_page.dart';
 import 'package:foodology/features/common/presentation/widgets/custom_input.dart';
+import 'package:foodology/features/dashboard/rider/presentation/pages/rider_homepage.dart';
 
 class RiderLoginPage extends StatelessWidget {
   static route() => MaterialPageRoute(builder: (context) => RiderLoginPage());
@@ -37,11 +38,8 @@ class RiderLoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () {
-                    String username = _usernameController.text;
-                    String password = _passwordController.text;
-                    print('Username: $username, Password: $password');
-                  },
+                  onPressed: () =>
+                      Navigator.push(context, RiderHomepage.route()),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0F961D),
                     foregroundColor: Colors.white,
@@ -58,13 +56,18 @@ class RiderLoginPage extends StatelessWidget {
                   onTap: () =>
                       Navigator.push(context, RiderRegistrationPage.route()),
                   child: RichText(
-                      text:  TextSpan(
+                      text: TextSpan(
                           text: 'Not a member? ',
-                          style: TextStyle(color: Theme.of(context).textTheme.headlineMedium?.color),
+                          style: TextStyle(
+                              color: Theme.of(context)
+                                  .textTheme
+                                  .headlineMedium
+                                  ?.color),
                           children: const [
                         TextSpan(
                             text: 'Register Yourself',
-                            style: TextStyle(color: Color.fromARGB(255, 20, 97, 160)))
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 20, 97, 160)))
                       ])),
                 )
               ],

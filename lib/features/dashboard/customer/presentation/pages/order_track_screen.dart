@@ -21,14 +21,18 @@ class OrderTrackScreen extends StatelessWidget {
             width: double.infinity,
             decoration: const BoxDecoration(
               image: DecorationImage(
-                image: AssetImage(
-                    'assets/images/map.png'), // Replace with the path to your placeholder map image
+                image: AssetImage('assets/images/map.png'),
                 fit: BoxFit.cover,
               ),
             ),
           ),
           const Expanded(
-            child: RiderInfo(),
+            child: RiderInfo(
+              name: 'Mr. Rahim',
+              id: '68#T',
+              points: 120,
+              imageUrl: 'assets/images/rider.png',
+            ),
           ),
         ],
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodology/features/common/presentation/widgets/custom_input.dart';
 import 'package:foodology/features/authentication/restaurant/presentation/pages/restaurant_login_page.dart';
+import 'package:foodology/features/dashboard/restaurant/presentation/pages/restaurant_homepage.dart';
 
 class RestaurantRegistrationPage extends StatelessWidget {
   static route() =>
@@ -82,7 +83,8 @@ class RestaurantRegistrationPage extends StatelessWidget {
                     height: 30,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () =>
+                        Navigator.push(context, RestaurantHomepage.route()),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF0F961D),
                       foregroundColor: Colors.white,
@@ -101,11 +103,16 @@ class RestaurantRegistrationPage extends StatelessWidget {
                     child: RichText(
                         text: TextSpan(
                             text: 'Already a member? ',
-                            style: TextStyle(color: Theme.of(context).textTheme.headlineMedium?.color),
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium
+                                    ?.color),
                             children: const [
                           TextSpan(
                               text: 'Login',
-                              style: TextStyle(color:Color.fromARGB(255, 20, 97, 160)))
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 20, 97, 160)))
                         ])),
                   )
                 ],

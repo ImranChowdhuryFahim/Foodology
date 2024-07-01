@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodology/core/common/cubits/user_info/user_info_cubit.dart';
+import 'package:foodology/features/common/presentation/pages/first_page.dart';
 import 'package:foodology/features/common/presentation/widgets/custom_input.dart';
 
 class RiderProfile extends StatelessWidget {
@@ -11,6 +14,7 @@ class RiderProfile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userCubit = context.read<UserInfoCubit>();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -65,7 +69,14 @@ class RiderProfile extends StatelessWidget {
                         child: const Text('Edit Profile'),
                       ),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          userCubit.logOut();
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            FirstPage.route(),
+                            (Route<dynamic> route) => false,
+                          );
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: const RoundedRectangleBorder(
                             borderRadius: BorderRadius.zero,

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foodology/core/common/cubits/dark_mode/dark_mode_cubit.dart';
-import 'package:foodology/features/authentication/customer/presentation/pages/customer_login_page.dart';
+import 'package:foodology/core/common/cubits/user_info/user_info_cubit.dart';
+import 'package:foodology/features/common/presentation/pages/first_page.dart';
 import 'package:foodology/features/dashboard/admin/presentation/widgets/account_option.dart';
 import 'package:foodology/features/dashboard/customer/presentation/pages/customer_homepage.dart';
 import 'package:foodology/features/dashboard/customer/presentation/pages/customer_profile.dart';
@@ -13,6 +14,7 @@ class CustomerAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userCubit = context.read<UserInfoCubit>();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -80,16 +82,15 @@ class CustomerAccount extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.dark_mode, color: Colors.black),
               title: const Text('Dark Mode'),
-              trailing: BlocBuilder<DarkModeCubit,bool>(
-                builder: (context,isDarkMode) {
-                  return Switch(
-                    value: isDarkMode,
-                    onChanged: (bool value) {
-                       context.read<DarkModeCubit>().toggleDarkMode();
-                    },
-                  );
-                }
-              ),
+              trailing: BlocBuilder<DarkModeCubit, bool>(
+                  builder: (context, isDarkMode) {
+                return Switch(
+                  value: isDarkMode,
+                  onChanged: (bool value) {
+                    context.read<DarkModeCubit>().toggleDarkMode();
+                  },
+                );
+              }),
               onTap: () {},
             ),
             const AccountOption(
@@ -98,7 +99,14 @@ class CustomerAccount extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),
               title: const Text('Log Out'),
-              onTap: () => Navigator.push(context, CustomerLoginPage.route()),
+              onTap: () {
+                userCubit.logOut();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  FirstPage.route(),
+                  (Route<dynamic> route) => false,
+                );
+              },
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodology/features/common/presentation/widgets/custom_input.dart';
 import 'package:foodology/features/authentication/restaurant/presentation/pages/restaurant_login_page.dart';
-import 'package:foodology/features/dashboard/restaurant/presentation/pages/restaurant_homepage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RestaurantRegistrationPage extends StatelessWidget {
   static route() =>
@@ -14,6 +14,65 @@ class RestaurantRegistrationPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _confirmpasswordController =
       TextEditingController();
+  void handleRegistration(BuildContext context) async {
+    if (_usernameController.text.isEmpty ||
+        _fullnameController.text.isEmpty ||
+        _mobilenoController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        _passwordController.text.isEmpty ||
+        _confirmpasswordController.text.isEmpty ||
+        _passwordController.text != _confirmpasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill in all fields and ensure passwords match'),
+        ),
+      );
+      return;
+    }
+    try {
+      final existingUser = await Supabase.instance.client
+          .from('users')
+          .select()
+          .or('document->>username.eq.${_usernameController.text}, document->>mobileno.eq.${_mobilenoController.text}');
+
+      if (existingUser.isNotEmpty) {
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            'User already exists with same username or phone number',
+          ),
+        ));
+        return;
+      }
+
+      await Supabase.instance.client.from('users').insert({
+        'document': {
+          'usertype': 'restaurant',
+          'username': _usernameController.text,
+          'fullname': _fullnameController.text,
+          'mobileno': _mobilenoController.text,
+          'email': _emailController.text,
+          'password': _passwordController.text,
+        }
+      });
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          'Registration Successfull! Login With your username and password',
+        ),
+      ));
+
+      Navigator.push(context, RestaurantLoginPage.route());
+    } catch (error) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              'Registration failed!. Please check your connection. ${error}'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -83,8 +142,7 @@ class RestaurantRegistrationPage extends StatelessWidget {
                     height: 30,
                   ),
                   ElevatedButton(
-                    onPressed: () =>
-                        Navigator.push(context, RestaurantHomepage.route()),
+                    onPressed: () => handleRegistration(context),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF0F961D),
                       foregroundColor: Colors.white,

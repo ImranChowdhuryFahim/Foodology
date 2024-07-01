@@ -1,7 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodology/core/common/cubits/user_info/user_info_cubit.dart';
 import 'package:foodology/features/authentication/rider/presentation/pages/rider_registration_page.dart';
 import 'package:foodology/features/common/presentation/widgets/custom_input.dart';
 import 'package:foodology/features/dashboard/rider/presentation/pages/rider_homepage.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class RiderLoginPage extends StatelessWidget {
   static route() => MaterialPageRoute(builder: (context) => RiderLoginPage());
@@ -9,8 +14,52 @@ class RiderLoginPage extends StatelessWidget {
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
+  void handleLogin(BuildContext context, UserInfoCubit userCubit) async {
+    if (_usernameController.text.isEmpty || _passwordController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill in username and password'),
+        ),
+      );
+      return;
+    }
+    try {
+      final existingUser = await Supabase.instance.client
+          .from('users')
+          .select()
+          .eq('document->>username', _usernameController.text)
+          .eq('document->>password', _passwordController.text)
+          .eq('document->>usertype', 'rider');
+
+      if (existingUser.isEmpty) {
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            'No user exits with the given username or password',
+          ),
+        ));
+        return;
+      }
+
+      userCubit.logIn(jsonEncode(existingUser[0]['document']));
+
+      if (!context.mounted) return;
+
+      Navigator.push(context, RiderHomepage.route());
+    } catch (error) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content:
+              Text('Login failed!. Please check your connection. ${error}'),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    final userCubit = context.read<UserInfoCubit>();
     return Scaffold(
       resizeToAvoidBottomInset: true,
       appBar: AppBar(),
@@ -38,8 +87,7 @@ class RiderLoginPage extends StatelessWidget {
                 ),
                 const SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () =>
-                      Navigator.push(context, RiderHomepage.route()),
+                  onPressed: () => handleLogin(context, userCubit),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF0F961D),
                     foregroundColor: Colors.white,

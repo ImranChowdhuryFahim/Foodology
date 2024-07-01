@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodology/core/common/cubits/user_info/user_info_cubit.dart';
+import 'package:foodology/features/common/presentation/pages/first_page.dart';
 import 'package:foodology/features/dashboard/restaurant/presentation/widgets/dashboard_item.dart';
 import 'package:foodology/features/dashboard/restaurant/presentation/widgets/menu_button.dart';
 import 'package:foodology/features/dashboard/restaurant/presentation/widgets/restaurant_info.dart';
@@ -17,6 +20,7 @@ class RestaurantHomepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userCubit = context.read<UserInfoCubit>();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -75,7 +79,14 @@ class RestaurantHomepage extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red, foregroundColor: Colors.black),
-                onPressed: () {},
+                onPressed: () {
+                  userCubit.logOut();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    FirstPage.route(),
+                    (Route<dynamic> route) => false,
+                  );
+                },
                 child: const Text("Log Out"),
               ),
             ),

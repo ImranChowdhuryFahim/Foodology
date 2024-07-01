@@ -35,7 +35,7 @@ class CustomerLoginPage extends StatelessWidget {
         if (!context.mounted) return;
         ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
           content: Text(
-            'No user exits with the given username or phone number',
+            'No user exits with the given username or password',
           ),
         ));
         return;

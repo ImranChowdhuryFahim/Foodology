@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodology/core/common/cubits/user_info/user_info_cubit.dart';
+import 'package:foodology/features/common/presentation/pages/first_page.dart';
 import 'package:foodology/features/dashboard/admin/presentation/pages/admin_account.dart';
 
 class AdminDashboard extends StatelessWidget {
@@ -8,6 +11,7 @@ class AdminDashboard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userCubit = context.read<UserInfoCubit>();
     return Scaffold(
       body: Center(
         child: Column(
@@ -77,7 +81,14 @@ class AdminDashboard extends StatelessWidget {
               height: 100,
             ),
             ElevatedButton(
-              onPressed: () => {},
+              onPressed: () {
+                userCubit.logOut();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  FirstPage.route(),
+                  (Route<dynamic> route) => false,
+                );
+              },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromARGB(255, 240, 11, 11),
                 foregroundColor: Colors.white,

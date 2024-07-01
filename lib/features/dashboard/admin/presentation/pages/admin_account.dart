@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodology/core/common/cubits/user_info/user_info_cubit.dart';
+import 'package:foodology/features/common/presentation/pages/first_page.dart';
 import 'package:foodology/features/dashboard/admin/presentation/pages/admin_profile.dart';
 import 'package:foodology/features/dashboard/admin/presentation/widgets/account_option.dart';
 
@@ -9,6 +12,7 @@ class AdminAccount extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userCubit = context.read<UserInfoCubit>();
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
@@ -74,7 +78,14 @@ class AdminAccount extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.logout, color: Colors.red),
               title: const Text('Log Out'),
-              onTap: () {},
+              onTap: () {
+                userCubit.logOut();
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  FirstPage.route(),
+                  (Route<dynamic> route) => false,
+                );
+              },
             ),
             const Padding(
               padding: EdgeInsets.symmetric(vertical: 16.0),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foodology/features/authentication/rider/presentation/pages/rider_login_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foodology/core/common/cubits/user_info/user_info_cubit.dart';
+import 'package:foodology/features/common/presentation/pages/first_page.dart';
 import 'package:foodology/features/dashboard/rider/presentation/widgets/dashboard_item.dart';
 import 'package:foodology/features/dashboard/rider/presentation/widgets/rider_info.dart';
 
@@ -17,6 +19,7 @@ class RiderHomepage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final userCubit = context.read<UserInfoCubit>();
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -69,8 +72,14 @@ class RiderHomepage extends StatelessWidget {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.red, foregroundColor: Colors.black),
-                onPressed: () =>
-                    Navigator.push(context, RiderLoginPage.route()),
+                onPressed: () {
+                  userCubit.logOut();
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    FirstPage.route(),
+                    (Route<dynamic> route) => false,
+                  );
+                },
                 child: const Text("Log Out"),
               ),
             ),

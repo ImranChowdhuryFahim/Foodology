@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foodology/features/common/presentation/widgets/custom_input.dart';
 import 'package:foodology/features/authentication/customer/presentation/pages/customer_login_page.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class CustomerRegistrationPage extends StatelessWidget {
   static route() =>
@@ -13,6 +14,66 @@ class CustomerRegistrationPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _confirmpasswordController =
       TextEditingController();
+
+  void handleRegistration(BuildContext context) async {
+    if (_usernameController.text.isEmpty ||
+        _fullnameController.text.isEmpty ||
+        _mobilenoController.text.isEmpty ||
+        _emailController.text.isEmpty ||
+        _passwordController.text.isEmpty ||
+        _confirmpasswordController.text.isEmpty ||
+        _passwordController.text != _confirmpasswordController.text) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Please fill in all fields and ensure passwords match'),
+        ),
+      );
+      return;
+    }
+    try {
+      final existingUser = await Supabase.instance.client
+          .from('users')
+          .select()
+          .or('document->>username.eq.${_usernameController.text}, document->>mobileno.eq.${_mobilenoController.text}');
+
+      if (existingUser.isNotEmpty) {
+        if (!context.mounted) return;
+        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+          content: Text(
+            'User already exists with same username or phone number',
+          ),
+        ));
+        return;
+      }
+
+      await Supabase.instance.client.from('users').insert({
+        'document': {
+          'usertype': 'customer',
+          'username': _usernameController.text,
+          'fullname': _fullnameController.text,
+          'mobileno': _mobilenoController.text,
+          'email': _emailController.text,
+          'password': _passwordController.text,
+        }
+      });
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text(
+          'Registration Successfull! Login With your username and password',
+        ),
+      ));
+
+      Navigator.push(context, CustomerLoginPage.route());
+    } catch (error) {
+      if (!context.mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+              'Registration failed!. Please check your connection. ${error}'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +143,7 @@ class CustomerRegistrationPage extends StatelessWidget {
                     height: 30,
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () => handleRegistration(context),
                     style: ElevatedButton.styleFrom(
                       backgroundColor: const Color(0xFF0F961D),
                       foregroundColor: Colors.white,
@@ -101,11 +162,16 @@ class CustomerRegistrationPage extends StatelessWidget {
                     child: RichText(
                         text: TextSpan(
                             text: 'Already a member? ',
-                            style: TextStyle(color: Theme.of(context).textTheme.headlineMedium?.color),
+                            style: TextStyle(
+                                color: Theme.of(context)
+                                    .textTheme
+                                    .headlineMedium
+                                    ?.color),
                             children: const [
                           TextSpan(
                               text: 'Login',
-                              style: TextStyle(color: Color.fromARGB(255, 20, 97, 160)))
+                              style: TextStyle(
+                                  color: Color.fromARGB(255, 20, 97, 160)))
                         ])),
                   )
                 ],
